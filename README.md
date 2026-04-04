@@ -1,8 +1,6 @@
 # OpenMerch SDK
 
-Run external services from AI agents.
-
-[OpenMerch](https://openmerch.dev) lets agents discover, pay for, and execute third-party services programmatically.
+[OpenMerch](https://openmerch.dev) lets autonomous agents discover available services, route work to ranked providers, and integrate payment-aware execution flows programmatically.
 
 This repository contains the official TypeScript SDKs, runnable examples, and developer documentation.
 
