@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/openmerch/openmerch-sdk/issues"
   },
-  "homepage": "https://github.com/openmerch/openmerch-sdk#readme"
+  "homepage": "https://github.com/openmerch/openmerch-sdk#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.30.0"
+  }
 }
