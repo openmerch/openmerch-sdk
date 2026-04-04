@@ -63,6 +63,8 @@ const task: TaskRequest = {
 
 This package currently exports type definitions and interfaces. Runtime client functionality is under active development. Check the [changelog](https://github.com/openmerch/openmerch-sdk/releases) for updates.
 
+**Payment support:** Pricing is expressed in USD-denominated units for accounting. Onchain settlement currently uses USDC on Base and Base Sepolia.
+
 ## License
 
 [MIT](../../LICENSE)
