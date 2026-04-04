@@ -1,6 +1,6 @@
 {
   "name": "@openmerch/provider",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "OpenMerch Provider SDK — register services, handle sync/async/streaming executions",
   "license": "MIT",
   "author": "OpenMerch",

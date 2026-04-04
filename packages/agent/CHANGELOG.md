@@ -1,5 +1,11 @@
 # @openmerch/agent
 
+## 0.2.5
+
+### Patch Changes
+
+- Remove broken changelog link from package READMEs.
+
 ## 0.2.4
 
 ### Patch Changes
