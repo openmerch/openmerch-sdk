@@ -6,6 +6,15 @@ Run external services from AI agents.
 
 This repository contains the official TypeScript SDKs, runnable examples, and developer documentation.
 
+## OpenMerch and MPP
+
+OpenMerch provides a developer surface for building on the <a href="https://mpp.dev/" target="_blank">Machine-Payable Protocol (MPP)</a>. The public SDKs in this repo focus on the application-layer pieces developers need to define services, discover capabilities, and integrate payment-aware execution flows.
+
+- `@openmerch/provider` is for services exposing machine-payable capabilities.
+- `@openmerch/agent` is for clients that discover and invoke those services.
+
+For implementation details, see the package READMEs and example projects.
+
 ## Packages
 
 | Package | Version | Description |

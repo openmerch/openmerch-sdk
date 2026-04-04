@@ -2,6 +2,8 @@
 
 TypeScript SDK for OpenMerch service providers. Define services, set pricing, and handle execution requests from agents over the OpenMerch protocol.
 
+`@openmerch/provider` is intended for services that want to expose machine-payable capabilities through OpenMerch and the <a href="https://mpp.dev/" target="_blank">Machine-Payable Protocol (MPP)</a>. It focuses on the public provider-side contract: service definition, execution interfaces, and payment-aware integration points.
+
 ## Installation
 
 ```bash

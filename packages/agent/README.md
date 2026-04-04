@@ -2,6 +2,8 @@
 
 TypeScript SDK for OpenMerch agents. Discover services, execute tasks against providers, and manage wallet balances on the OpenMerch protocol.
 
+`@openmerch/agent` is intended for clients and agents that need to discover and invoke machine-payable services through OpenMerch and the <a href="https://mpp.dev/" target="_blank">Machine-Payable Protocol (MPP)</a>. It focuses on the public agent-side contract: discovery, execution requests, and payment-aware integration points.
+
 ## Installation
 
 ```bash
