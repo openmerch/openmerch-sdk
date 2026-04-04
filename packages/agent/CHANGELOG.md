@@ -1,5 +1,11 @@
 # @openmerch/agent
 
+## 0.2.3
+
+### Patch Changes
+
+- Fix "Machine Payable Protocol" naming in READMEs — remove hyphens from prose references.
+
 ## 0.2.2
 
 ### Patch Changes

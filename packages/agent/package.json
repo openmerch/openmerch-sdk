@@ -1,6 +1,6 @@
 {
   "name": "@openmerch/agent",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "OpenMerch Agent SDK — discover services, execute tasks, manage wallet",
   "license": "MIT",
   "author": "OpenMerch",
