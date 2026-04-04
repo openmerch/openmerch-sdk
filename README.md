@@ -1,8 +1,10 @@
 # OpenMerch SDK
 
-Public client libraries for the [OpenMerch](https://openmerch.dev) protocol — a machine-payable service layer that connects AI agents with service providers.
+Run external services from AI agents.
 
-This monorepo contains the official TypeScript SDKs, runnable examples, and developer documentation.
+[OpenMerch](https://openmerch.dev) lets agents discover, pay for, and execute third-party services programmatically.
+
+This repository contains the official TypeScript SDKs, runnable examples, and developer documentation.
 
 ## Packages
 
