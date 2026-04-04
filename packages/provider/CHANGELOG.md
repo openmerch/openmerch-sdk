@@ -1,5 +1,11 @@
 # @openmerch/provider
 
+## 0.2.2
+
+### Patch Changes
+
+- Add MPP framing to package READMEs so npm package pages reflect the updated documentation.
+
 ## 0.2.1
 
 ### Patch Changes
