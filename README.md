@@ -82,14 +82,6 @@ npm run typecheck
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for full development guidelines.
 
-## What This Repo Does Not Contain
-
-This is a public SDK repository. It does not include:
-
-- Private backend services or control plane code
-- Internal routing, treasury, or settlement engine internals
-- Operator tooling or infrastructure configuration
-
 ## Status
 
 These SDKs are in early development. APIs may change between minor versions until 1.0. See individual package READMEs for current scope and maturity.
