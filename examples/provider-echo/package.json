@@ -1,0 +1,22 @@
+{
+  "name": "example-provider-echo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Minimal OpenMerch provider example — echoes requests back",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@openmerch/provider": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

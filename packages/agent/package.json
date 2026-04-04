@@ -1,0 +1,55 @@
+{
+  "name": "@openmerch/agent",
+  "version": "0.2.0",
+  "description": "OpenMerch Agent SDK — discover services, execute tasks, manage wallet",
+  "license": "MIT",
+  "author": "OpenMerch",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmerch/openmerch-sdk.git",
+    "directory": "packages/agent"
+  },
+  "homepage": "https://github.com/openmerch/openmerch-sdk/tree/main/packages/agent#readme",
+  "bugs": {
+    "url": "https://github.com/openmerch/openmerch-sdk/issues"
+  },
+  "keywords": [
+    "openmerch",
+    "mpp",
+    "machine-payable",
+    "ai-services",
+    "agent",
+    "sdk"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/src/index.d.ts",
+        "default": "./dist/src/index.js"
+      }
+    }
+  },
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

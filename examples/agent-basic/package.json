@@ -1,0 +1,22 @@
+{
+  "name": "example-agent-basic",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Basic OpenMerch agent example — service discovery and task execution",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@openmerch/agent": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

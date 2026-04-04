@@ -1,0 +1,27 @@
+{
+  "name": "openmerch-sdk",
+  "private": true,
+  "description": "OpenMerch SDK monorepo — client libraries for the OpenMerch protocol",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmerch/openmerch-sdk.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/openmerch/openmerch-sdk/issues"
+  },
+  "homepage": "https://github.com/openmerch/openmerch-sdk#readme"
+}
