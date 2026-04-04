@@ -1,5 +1,11 @@
 # @openmerch/provider
 
+## 0.2.4
+
+### Patch Changes
+
+- Add payment support note to package READMEs: USD-denominated pricing, USDC settlement on Base and Base Sepolia.
+
 ## 0.2.3
 
 ### Patch Changes
