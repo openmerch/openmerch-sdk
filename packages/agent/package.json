@@ -1,7 +1,7 @@
 {
   "name": "@openmerch/agent",
   "version": "0.2.5",
-  "description": "OpenMerch Agent SDK — discover services, execute tasks, manage wallet",
+  "description": "Preview TypeScript types for OpenMerch agent integrations",
   "license": "MIT",
   "author": "OpenMerch",
   "repository": {

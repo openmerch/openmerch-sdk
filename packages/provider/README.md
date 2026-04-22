@@ -1,8 +1,21 @@
 # @openmerch/provider
 
-TypeScript SDK for OpenMerch service providers. Define services, set pricing, and handle execution requests from agents over the OpenMerch protocol.
+Preview TypeScript types for OpenMerch provider integrations. Defines the type contracts for service registration, pricing models, and execution handling on the OpenMerch protocol.
 
-`@openmerch/provider` is intended for services that want to expose machine payable capabilities through OpenMerch and the <a href="https://mpp.dev/" target="_blank">Machine Payable Protocol (MPP)</a>. It focuses on the public provider-side contract: service definition, execution interfaces, and payment-aware integration points.
+`@openmerch/provider` publishes the provider-side type contract for services building against the <a href="https://mpp.dev/" target="_blank">Machine Payable Protocol (MPP)</a>: service definition shapes, execution handler interfaces, and payment-aware integration points.
+
+> **Preview** — This package exports TypeScript types and interfaces only. Runtime registration, request handling, and related client helpers are still under development. Install today to build against the type surface.
+
+## What Works Today
+
+- All provider-side type definitions: `ServiceDefinition`, `PricingModel`, `ExecutionRequest`, `ExecutionResult`, handler types, and more
+- Handler function signatures for sync, async, and streaming execution modes
+- Pricing types expressed in USD-denominated units
+
+## What Is Not Yet Shipped
+
+- Runtime server or framework adapter for handling live execution requests
+- Polished client helpers for service registration with the OpenMerch network
 
 ## Installation
 
@@ -12,13 +25,15 @@ npm install @openmerch/provider
 
 ## Overview
 
-This package provides the type definitions and interfaces for building an OpenMerch provider. Providers register services on the network and implement handlers for three execution modes:
+This package provides the type definitions and interfaces for the provider side of the OpenMerch protocol. The type surface models three execution modes:
 
 - **Sync** — request/response, returns a result immediately
 - **Async** — returns a job ID, result is retrieved later
 - **Stream** — emits a sequence of chunks as the execution progresses
 
 ## Usage
+
+The snippet below uses `import type` to show the contracts your code can build against before runtime clients ship.
 
 ```ts
 import type {
@@ -58,11 +73,13 @@ const handleEcho: SyncHandler = async (req: ExecutionRequest): Promise<Execution
 - `ExecutionHandlers` — map of mode to handler
 - `ProviderConfig` — full provider configuration
 
-## Current Scope
+## Payment Support
 
-This package currently exports type definitions and interfaces. Runtime client functionality is under active development.
+Pricing is expressed in USD-denominated units for accounting. Onchain settlement types model USDC on Base and Base Sepolia.
 
-**Payment support:** Pricing is expressed in USD-denominated units for accounting. Onchain settlement currently uses USDC on Base and Base Sepolia.
+## Pre-1.0 Stability
+
+This package is versioned below 1.0. Before 1.0, minor releases may include breaking changes.
 
 ## License
 

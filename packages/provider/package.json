@@ -1,7 +1,7 @@
 {
   "name": "@openmerch/provider",
   "version": "0.2.5",
-  "description": "OpenMerch Provider SDK — register services, handle sync/async/streaming executions",
+  "description": "Preview TypeScript types for OpenMerch provider integrations",
   "license": "MIT",
   "author": "OpenMerch",
   "repository": {

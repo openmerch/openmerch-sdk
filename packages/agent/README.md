@@ -1,8 +1,22 @@
 # @openmerch/agent
 
-TypeScript SDK for OpenMerch agents. Discover services, execute tasks against providers, and manage wallet balances on the OpenMerch protocol.
+Preview TypeScript types for OpenMerch agent integrations. Defines the type contracts for service discovery, task execution, and wallet modeling on the OpenMerch protocol.
 
-`@openmerch/agent` is intended for clients and agents that need to discover and invoke machine payable services through OpenMerch and the <a href="https://mpp.dev/" target="_blank">Machine Payable Protocol (MPP)</a>. It focuses on the public agent-side contract: discovery, execution requests, and payment-aware integration points.
+`@openmerch/agent` publishes the agent-side type contract for clients building against the <a href="https://mpp.dev/" target="_blank">Machine Payable Protocol (MPP)</a>: discovery queries, execution request shapes, and payment-aware integration points.
+
+> **Preview** — This package exports TypeScript types and interfaces only. Runtime client functionality is still under development. Install today to build against the type surface.
+
+## What Works Today
+
+- All agent-side type definitions: `AgentConfig`, `ServiceQuery`, `TaskRequest`, `TaskResult`, `WalletBalance`, and more
+- Type-safe modeling of sync, async, and streaming execution modes
+- Pricing types expressed in USD-denominated units
+
+## What Is Not Yet Shipped
+
+- Runtime HTTP/WebSocket client for connecting to the OpenMerch network
+- Polished client helpers for service discovery or task execution
+- Wallet client helpers for balance reads or transaction submission
 
 ## Installation
 
@@ -12,13 +26,15 @@ npm install @openmerch/agent
 
 ## Overview
 
-This package provides the type definitions and interfaces for building an OpenMerch agent. Agents interact with the network to:
+This package provides the type definitions and interfaces for the agent side of the OpenMerch protocol. The type surface covers:
 
-- **Discover** available services by keyword, price, or execution mode
-- **Execute** tasks against provider services (sync, async, or streaming)
-- **Manage** wallet balances and track transaction history
+- **Discovery** — query shapes for finding services by keyword, price, or execution mode
+- **Execution** — request and result types for sync, async, and streaming tasks
+- **Wallet** — balance and transaction types for payment-aware integration
 
 ## Usage
+
+The snippet below uses `import type` to show the contracts your code can build against before runtime clients ship.
 
 ```ts
 import type {
@@ -59,11 +75,13 @@ const task: TaskRequest = {
 - `WalletTransaction` — a single transaction record
 - `AgentConfig` — agent connection configuration
 
-## Current Scope
+## Payment Support
 
-This package currently exports type definitions and interfaces. Runtime client functionality is under active development.
+Pricing is expressed in USD-denominated units for accounting. Onchain settlement types model USDC on Base and Base Sepolia.
 
-**Payment support:** Pricing is expressed in USD-denominated units for accounting. Onchain settlement currently uses USDC on Base and Base Sepolia.
+## Pre-1.0 Stability
+
+This package is versioned below 1.0. Before 1.0, minor releases may include breaking changes.
 
 ## License
 
