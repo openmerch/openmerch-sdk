@@ -1,6 +1,6 @@
 {
   "name": "@openmerch/provider",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Preview TypeScript types for OpenMerch provider integrations",
   "license": "MIT",
   "author": "OpenMerch",

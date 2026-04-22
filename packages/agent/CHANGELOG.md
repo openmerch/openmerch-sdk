@@ -1,5 +1,11 @@
 # @openmerch/agent
 
+## 0.2.6
+
+### Patch Changes
+
+- 69d3aa9: Reposition README and package metadata for preview scope. Adds preview banner, "What Works Today" and "What Is Not Yet Shipped" sections, rewords npm descriptions to type-contract language, and adds pre-1.0 stability note. No runtime functionality added.
+
 ## 0.2.5
 
 ### Patch Changes

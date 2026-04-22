@@ -1,6 +1,6 @@
 {
   "name": "@openmerch/agent",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Preview TypeScript types for OpenMerch agent integrations",
   "license": "MIT",
   "author": "OpenMerch",
