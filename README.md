@@ -45,44 +45,37 @@ npm install @openmerch/agent
 ```
 
 ```ts
-import { OpenMerchAgent } from "@openmerch/agent";
+import type {
+  AgentConfig,
+  TaskRequest,
+  TaskResult,
+} from "@openmerch/agent";
 
-const agent = new OpenMerchAgent({
-  baseUrl: "https://api.openmerch.dev",
-  apiKey: process.env.OPENMERCH_API_KEY!,
-});
-
-// check cost before committing
-const plan = await agent.planJob({
-  job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
-});
-
-// execute the job — cost accrues to your account
-const job = await agent.executeJob({
-  job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
-  max_cost: plan.estimated_cost.max_microcents,
-  idempotency_key: `lead-acme-${Date.now()}`,
-});
-
-console.log(job.output);
-console.log(job.cost);
-```
-
-> The runtime client is under active development. The published package currently exports TypeScript types. The example above shows the target integration surface.
-
-#### Current Type Surface
-
-```ts
-import type { AgentConfig, TaskRequest } from "@openmerch/agent";
+const config: AgentConfig = {
+  endpoint: "https://api.openmerch.dev",
+  apiKey: process.env.OPENMERCH_API_KEY ?? "dev-key",
+};
 
 const task: TaskRequest = {
-  serviceId: "my-service",
+  serviceId: "lead_qualification_v1",
   mode: "sync",
-  payload: { prompt: "Hello, world" },
+  payload: { domain: "acme.com" },
+  maxPrice: "250000",
 };
+
+const result: TaskResult = {
+  taskId: "task-demo-001",
+  success: true,
+  data: { domain: "acme.com", qualified: true },
+  cost: { amount: "250000", currency: "USD" },
+};
+
+console.log(config.endpoint);
+console.log(task.serviceId);
+console.log(result.success);
 ```
+
+For a runnable mocked demo, see [`examples/agent-basic`](./examples/agent-basic).
 
 ### Execution Backend (Provider)
 
@@ -114,6 +107,37 @@ const service: ServiceDefinition = {
 |---------|-------------|
 | [`agent-basic`](./examples/agent-basic) | Basic agent job planning and execution (mocked, no network) |
 | [`provider-echo`](./examples/provider-echo) | Minimal execution backend that echoes job payloads (mocked, no network) |
+
+## Roadmap
+
+### Target Runtime Agent API
+
+> Not yet implemented. The runtime client below is the planned integration surface, not part of the published package today.
+
+```ts
+import { OpenMerchAgent } from "@openmerch/agent";
+
+// PLANNED API — not yet available
+const agent = new OpenMerchAgent({
+  baseUrl: "https://api.openmerch.dev",
+  apiKey: process.env.OPENMERCH_API_KEY!,
+});
+
+const plan = await agent.planJob({
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+});
+
+const job = await agent.executeJob({
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+  max_cost: plan.estimated_cost.max_microcents,
+  idempotency_key: `lead-acme-${Date.now()}`,
+});
+
+console.log(job.output);
+console.log(job.cost);
+```
 
 ## Repo Layout
 
