@@ -32,7 +32,7 @@ This package provides the type definitions and interfaces for the agent side of 
 
 ## Usage
 
-This package exports TypeScript types and interfaces only. Use `import type` to model your integration against the current published surface:
+This package exports TypeScript types and interfaces only. Use `import type` in your TypeScript files to model your integration against the current published surface:
 
 ```ts
 import type {

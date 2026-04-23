@@ -44,6 +44,8 @@ For implementation details, see the package READMEs and example projects.
 npm install @openmerch/agent
 ```
 
+Use the types in your TypeScript files:
+
 ```ts
 import type {
   AgentConfig,
@@ -82,6 +84,8 @@ For a runnable mocked demo, see [`examples/agent-basic`](./examples/agent-basic)
 ```bash
 npm install @openmerch/provider
 ```
+
+Use the types in your TypeScript files:
 
 ```ts
 import type {
