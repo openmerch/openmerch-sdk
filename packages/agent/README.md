@@ -1,20 +1,8 @@
 # @openmerch/agent
 
-Preview TypeScript types for OpenMerch agent integrations. Defines the type contracts for job planning, execution, and result handling on the OpenMerch platform.
+Runtime SDK for submitting and tracking jobs on the [OpenMerch](https://openmerch.dev) platform. Plan costs, execute jobs, poll for results, and manage billing — all from TypeScript.
 
-> **Preview** — This package exports TypeScript types and interfaces only. Runtime client functionality is still under development. Install today to build against the type surface.
-
-## What Works Today
-
-- All agent-side type definitions: `AgentConfig`, `TaskRequest`, `TaskResult`, and more
-- Job execution request and result shapes for sync, async, and streaming modes
-- Cost types expressed in microcents
-
-## What Is Not Yet Shipped
-
-- Runtime HTTP/WebSocket client for connecting to the OpenMerch network
-- `planJob()` and `executeJob()` methods
-- Card-on-file billing helpers
+Zero runtime dependencies. Uses `node:http`/`node:https` directly. Requires Node.js 18+.
 
 ## Installation
 
@@ -22,100 +10,23 @@ Preview TypeScript types for OpenMerch agent integrations. Defines the type cont
 npm install @openmerch/agent
 ```
 
-## Overview
-
-This package provides the type definitions and interfaces for the agent side of the OpenMerch platform. The type surface covers:
-
-- **Job Execution** — request and result types for submitting jobs and handling structured output
-- **Configuration** — agent connection and authentication settings
-- **Billing** — cost types in microcents, card-on-file billing
-
-## Usage
-
-This package exports TypeScript types and interfaces only. Use `import type` in your TypeScript files to model your integration against the current published surface:
-
-```ts
-import type {
-  AgentConfig,
-  TaskRequest,
-  TaskResult,
-} from "@openmerch/agent";
-
-const config: AgentConfig = {
-  endpoint: "https://api.openmerch.dev",
-  apiKey: process.env.OPENMERCH_API_KEY ?? "dev-key",
-};
-
-const task: TaskRequest = {
-  serviceId: "lead_qualification_v1",
-  mode: "sync",
-  payload: { domain: "acme.com" },
-  maxPrice: "250000",
-};
-
-const result: TaskResult = {
-  taskId: "task-demo-001",
-  success: true,
-  data: { domain: "acme.com", qualified: true },
-  cost: { amount: "250000", currency: "USD" },
-};
-
-console.log(config.endpoint);
-console.log(task.serviceId);
-console.log(result.success);
-```
-
-For a runnable mocked demo, see [`examples/agent-basic`](../../examples/agent-basic).
-
-## Exported Types
-
-### Job Types
-
-These types will be renamed to match the job-oriented surface (e.g., `JobRequest`, `JobResult`) in an upcoming pre-1.0 release.
-
-- `TaskRequest` — job execution request
-- `TaskResult` — result from a sync job execution
-- `AsyncTaskHandle` — handle for polling async jobs
-- `TaskStreamChunk` — a chunk from a streaming job execution
-
-### Configuration
-
-- `AgentConfig` — agent connection and authentication configuration
-
-### Legacy Types (V0)
-
-These types reflect an earlier service-discovery model and will be removed before 1.0.
-
-- `ServiceQuery` — filter criteria for finding services (V0)
-- `ServiceListing` — a service record returned from a query (V0)
-- `ServiceQueryResult` — paginated query results (V0)
-- `WalletBalance` — wallet balance (replaced by card-on-file billing)
-- `WalletTransaction` — transaction record (replaced by card-on-file billing)
-
-## Payment Support
-
-Jobs have a cost. Costs accrue to your account and your card is charged automatically. Values in microcents (1 USD = 1,000,000). Wallet and onchain types are V0 artifacts being removed.
-
-## Roadmap
-
-### Target Runtime Agent API
-
-> Not yet implemented. The runtime client below is the planned integration surface, not part of the published package today.
+## Quick Start
 
 ```ts
 import { OpenMerchAgent } from "@openmerch/agent";
 
-// PLANNED API — not yet available
 const agent = new OpenMerchAgent({
   baseUrl: "https://api.openmerch.dev",
   apiKey: process.env.OPENMERCH_API_KEY!,
 });
 
+// check cost before committing
 const plan = await agent.planJob({
   job_type: "lead_qualification_v1",
   input: { domain: "acme.com" },
 });
 
+// execute the job — cost accrues to your account
 const job = await agent.executeJob({
   job_type: "lead_qualification_v1",
   input: { domain: "acme.com" },
@@ -125,6 +36,199 @@ const job = await agent.executeJob({
 
 console.log(job.output);
 console.log(job.cost);
+```
+
+## Configuration
+
+```ts
+const agent = new OpenMerchAgent({
+  baseUrl: "https://api.openmerch.dev",
+  apiKey: "om_live_...",
+
+  // Retry settings
+  retries: 2,              // default: 0 (no retry)
+  retryBaseMs: 500,        // default: 500
+  retryMaxMs: 10000,       // default: 10000
+  timeoutMs: 30000,        // default: 30000
+
+  // MPP payment handlers (optional)
+  paymentHandlers: [],
+  preferredMethods: [],
+  maxPaymentRetries: 3,    // default: 3
+});
+```
+
+## V1 Job API
+
+### `getCatalog()`
+
+List all available job types.
+
+```ts
+const catalog = await agent.getCatalog();
+```
+
+### `planJob(request)`
+
+Get a cost estimate and feasibility check before executing.
+
+```ts
+const plan = await agent.planJob({
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+});
+// plan.estimated_cost.max_microcents, plan.can_execute, plan.confidence
+```
+
+### `executeJob(request)`
+
+Execute a job. Cost accrues to your account.
+
+```ts
+const job = await agent.executeJob({
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+  max_cost: 250000,
+  idempotency_key: `lead-acme-${Date.now()}`,
+});
+// job.job_id, job.status, job.output, job.cost
+```
+
+### `getJob(jobId)`
+
+Check the current state of a job.
+
+```ts
+const job = await agent.getJob("job_01HXK9...");
+```
+
+### `cancelJob(jobId)`
+
+Cancel a running job.
+
+```ts
+const result = await agent.cancelJob("job_01HXK9...");
+```
+
+### `listJobs(options?)`
+
+List jobs with optional filters and cursor-based pagination.
+
+```ts
+const list = await agent.listJobs({
+  status: "completed",
+  job_type: "lead_qualification_v1",
+  limit: 10,
+});
+// list.jobs, list.next_cursor, list.has_more
+```
+
+### `pollJob(jobId, intervalMs?, timeoutMs?)`
+
+Poll a job until it reaches a terminal state (`completed`, `failed`, `cancelled`).
+
+```ts
+const result = await agent.pollJob("job_01HXK9...", 1000, 300000);
+```
+
+## Billing
+
+Jobs are billed to your card on file. Cost values are in microcents (1 USD = 1,000,000 microcents).
+
+```ts
+// Get Stripe publishable key for client-side setup
+const config = await agent.getBillingConfig();
+
+// Create a SetupIntent for card enrollment
+const intent = await agent.createCardSetupIntent();
+
+// Confirm after Stripe.js confirmCardSetup succeeds
+const card = await agent.confirmCardSetup(intent.setup_intent_id);
+
+// List cards on file
+const { cards } = await agent.listCards();
+```
+
+## MPP Payment Handlers
+
+For providers that use the [Machine Payable Protocol](https://mpp.dev/), you can configure payment handlers that automatically negotiate 402 challenges:
+
+```ts
+const agent = new OpenMerchAgent({
+  baseUrl: "https://api.openmerch.dev",
+  apiKey: "om_live_...",
+  paymentHandlers: [
+    {
+      method: "tempo",
+      pay: async (challenge) => {
+        // Execute payment, return credential string
+        return "credential_string";
+      },
+    },
+  ],
+  preferredMethods: ["tempo"],
+});
+```
+
+## Error Handling
+
+```ts
+import { OpenMerchAgent, OpenMerchError, PaymentRequiredError, NoMatchingMethodError } from "@openmerch/agent";
+
+try {
+  const job = await agent.executeJob({ ... });
+} catch (err) {
+  if (err instanceof OpenMerchError) {
+    console.error(err.statusCode, err.responseBody);
+  }
+  if (err instanceof PaymentRequiredError) {
+    console.error("No payment handlers configured", err.challenges);
+  }
+  if (err instanceof NoMatchingMethodError) {
+    console.error("No handler matches offered methods", err.challenges);
+  }
+}
+```
+
+## Deprecated V0 Methods
+
+The following methods are still exported but deprecated. Use the V1 Job API instead.
+
+| V0 Method | V1 Replacement |
+|---|---|
+| `discover()` | `getCatalog()` / `planJob()` |
+| `execute()` | `executeJob()` |
+| `executeStream()` | Not available in V1 |
+| `getExecution()` | `getJob()` |
+| `cancelExecution()` | `cancelJob()` |
+| `pollExecution()` | `pollJob()` |
+| `runTask()` | `planJob()` + `executeJob()` |
+| `getWallet()` / `fund()` | Card-on-file billing |
+
+## Exported Types
+
+```ts
+import type {
+  AgentConfig,
+  PlanJobRequest,
+  PlanJobResponse,
+  CostEstimate,
+  ExecuteJobRequest,
+  JobResponse,
+  JobCost,
+  JobError,
+  CancelJobResponse,
+  ListJobsOptions,
+  JobListItem,
+  JobListResponse,
+  CatalogEntry,
+  PaymentHandler,
+  MPPChallenge,
+  BillingConfig,
+  SetupIntentResult,
+  CardInfo,
+  CardListResponse,
+} from "@openmerch/agent";
 ```
 
 ## Pre-1.0 Stability

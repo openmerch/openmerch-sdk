@@ -1,7 +1,7 @@
 {
   "name": "@openmerch/agent",
   "version": "0.2.6",
-  "description": "Preview TypeScript types for OpenMerch agent integrations",
+  "description": "OpenMerch Agent SDK — discover services, execute jobs, manage billing",
   "license": "MIT",
   "author": "OpenMerch",
   "repository": {
@@ -37,13 +37,16 @@
   "types": "./dist/src/index.d.ts",
   "files": [
     "dist",
+    "!dist/tests",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist *.tsbuildinfo",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test dist/tests/agent.test.js dist/tests/mpp.test.js dist/tests/billing.test.js dist/tests/job.test.js",
+    "pretest": "npm run build"
   },
   "devDependencies": {
     "typescript": "^5.4.0",

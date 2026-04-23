@@ -1,113 +1,100 @@
 /**
  * Agent Basic Example
  *
- * Demonstrates service discovery, task execution, and wallet types
- * using the @openmerch/agent type contracts. Runs locally with mocked
- * data — no network connection required.
+ * Demonstrates the V1 SDK type surface using the @openmerch/agent package.
+ * This example constructs typed request/response objects offline to show
+ * the API shape — it does not exercise real HTTP transport behavior.
  */
 
+import {
+  OpenMerchAgent,
+} from "@openmerch/agent";
 import type {
-  ServiceQuery,
-  ServiceListing,
-  ServiceQueryResult,
-  TaskRequest,
-  TaskResult,
-  WalletBalance,
+  AgentConfig,
+  PlanJobRequest,
+  PlanJobResponse,
+  CostEstimate,
+  ExecuteJobRequest,
+  JobResponse,
+  JobCost,
 } from "@openmerch/agent";
 
 // ---------------------------------------------------------------------------
-// 1. Service discovery
+// 1. Configuration
 // ---------------------------------------------------------------------------
 
-const query: ServiceQuery = {
-  keyword: "echo",
-  mode: "sync",
-  maxPrice: "100",
-  currency: "USD",
-  limit: 10,
+const config: AgentConfig = {
+  baseUrl: "https://api.openmerch.dev",
+  apiKey: "om_live_example_key",
 };
 
-// Mock: in a real agent, this would come from the OpenMerch network
-const mockListings: ServiceListing[] = [
-  {
-    serviceId: "echo",
-    providerId: "provider-001",
-    name: "Echo Service",
-    description: "Returns the input payload unchanged",
-    modes: ["sync", "stream"],
-    pricing: { basePrice: "0", currency: "USD" },
+const agent = new OpenMerchAgent(config);
+console.log("=== Agent Configuration ===");
+console.log(`Endpoint: ${config.baseUrl}`);
+console.log(`Agent created: ${agent instanceof OpenMerchAgent}`);
+console.log();
+
+// ---------------------------------------------------------------------------
+// 2. Plan a job (typed request + mocked response)
+// ---------------------------------------------------------------------------
+
+const planRequest: PlanJobRequest = {
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+};
+
+const mockPlanResponse: PlanJobResponse = {
+  job_type: "lead_qualification_v1",
+  can_execute: true,
+  estimated_cost: {
+    min_microcents: 150000,
+    max_microcents: 250000,
+    currency: "USD",
   },
-  {
-    serviceId: "translate-v1",
-    providerId: "provider-002",
-    name: "Translation Service",
-    description: "Translates text between languages",
-    modes: ["sync"],
-    pricing: { basePrice: "50", currency: "USD" },
+  confidence: 0.95,
+  estimated_latency_ms: 3200,
+  candidate_count: 3,
+  routing_strategy: "cost_optimized",
+};
+
+console.log("=== Plan Job ===");
+console.log(`Job type: ${planRequest.job_type}`);
+console.log(`Can execute: ${mockPlanResponse.can_execute}`);
+console.log(`Estimated cost: ${mockPlanResponse.estimated_cost.min_microcents}–${mockPlanResponse.estimated_cost.max_microcents} microcents`);
+console.log(`Confidence: ${mockPlanResponse.confidence}`);
+console.log();
+
+// ---------------------------------------------------------------------------
+// 3. Execute a job (typed request + mocked response)
+// ---------------------------------------------------------------------------
+
+const executeRequest: ExecuteJobRequest = {
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+  max_cost: mockPlanResponse.estimated_cost.max_microcents,
+  idempotency_key: `lead-acme-example`,
+};
+
+const mockJobResponse: JobResponse = {
+  job_id: "job_01HXK9QVBN3M4RPYG2WJKFZ8",
+  job_type: "lead_qualification_v1",
+  status: "completed",
+  output: {
+    domain: "acme.com",
+    qualified: true,
+    score: 87,
+    signals: ["enterprise", "high_traffic", "active_hiring"],
   },
-];
-
-const discoveryResult: ServiceQueryResult = {
-  services: mockListings,
-  total: mockListings.length,
-  offset: 0,
-  limit: query.limit ?? 10,
+  cost: {
+    total_microcents: 200000,
+    currency: "USD",
+  },
+  created_at: "2025-01-15T10:30:00Z",
+  updated_at: "2025-01-15T10:30:03Z",
 };
 
-// ---------------------------------------------------------------------------
-// 2. Task execution
-// ---------------------------------------------------------------------------
-
-const selectedService = discoveryResult.services[0];
-
-const task: TaskRequest = {
-  serviceId: selectedService.serviceId,
-  mode: "sync",
-  payload: { message: "Hello from the agent" },
-  maxPrice: "100",
-};
-
-// Mock: in a real agent, this would be the response from the provider
-const taskResult: TaskResult = {
-  taskId: "task-001",
-  success: true,
-  data: { message: "Hello from the agent" },
-  cost: { amount: "0", currency: "USD" },
-};
-
-// ---------------------------------------------------------------------------
-// 3. Wallet
-// ---------------------------------------------------------------------------
-
-// Mock wallet balance
-const balance: WalletBalance = {
-  available: "10000",
-  pending: "0",
-  currency: "USD",
-};
-
-// ---------------------------------------------------------------------------
-// Output
-// ---------------------------------------------------------------------------
-
-function main() {
-  console.log("=== Service Discovery ===");
-  console.log(`Query: keyword="${query.keyword}", mode=${query.mode}`);
-  console.log(`Found ${discoveryResult.total} service(s):`);
-  for (const svc of discoveryResult.services) {
-    console.log(`  - ${svc.name} (${svc.serviceId}) — ${svc.pricing.basePrice} ${svc.pricing.currency}`);
-  }
-  console.log();
-
-  console.log("=== Task Execution ===");
-  console.log(`Service: ${task.serviceId}, Mode: ${task.mode}`);
-  console.log(`Result:  success=${taskResult.success}, cost=${taskResult.cost?.amount} ${taskResult.cost?.currency}`);
-  console.log(`Data:    ${JSON.stringify(taskResult.data)}`);
-  console.log();
-
-  console.log("=== Wallet ===");
-  console.log(`Available: ${balance.available} ${balance.currency}`);
-  console.log(`Pending:   ${balance.pending} ${balance.currency}`);
-}
-
-main();
+console.log("=== Execute Job ===");
+console.log(`Job ID: ${mockJobResponse.job_id}`);
+console.log(`Status: ${mockJobResponse.status}`);
+console.log(`Cost: ${mockJobResponse.cost.total_microcents} microcents (${mockJobResponse.cost.currency})`);
+console.log(`Output: ${JSON.stringify(mockJobResponse.output)}`);

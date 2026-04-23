@@ -1,40 +1,15 @@
 # OpenMerch SDK
 
-[OpenMerch](https://openmerch.dev) is a job execution layer for AI agents. Agents submit jobs by type, get structured results back, and pay per job with usage-based billing. This repo publishes preview TypeScript type contracts for building against the OpenMerch platform.
-
-OpenMerch is launching app-first — the hosted app and backend API are the primary integration path. These SDK packages are published for early adopters, protocol exploration, and future direct integrators.
-
-> **Preview** — These packages publish TypeScript types, interfaces, and reference contracts. Runtime client functionality is still under development. Install today to build against the type surface.
-
-## What Works Today
-
-- Published npm packages with a stable import surface
-- TypeScript types and interfaces for job planning, execution, and result handling
-- Reference examples demonstrating expected integration patterns
-
-## What Is Not Yet Shipped
-
-- Runtime HTTP client or transport layer
-- Production-ready client helpers for connecting to the OpenMerch network
-- Polished self-serve integration guidance
-
-## How It Works
-
-Agents submit jobs by type. OpenMerch plans and routes execution to the right provider, returns structured results, and bills your account automatically.
+[OpenMerch](https://openmerch.dev) is a job execution layer for AI agents. Agents submit jobs by type, get structured results back, and pay per job with usage-based billing.
 
 Under the hood, OpenMerch routes jobs to providers via the <a href="https://mpp.dev/" target="_blank">Machine Payable Protocol (MPP)</a>. Agents never interact with MPP directly.
 
-- `@openmerch/agent` is for agents that submit and track jobs.
-- `@openmerch/provider` is for building execution backends on the OpenMerch network.
-
-For implementation details, see the package READMEs and example projects.
-
 ## Packages
 
-| Package | Version | Description |
-|---------|---------|-------------|
-| [`@openmerch/agent`](./packages/agent) | [![npm](https://img.shields.io/npm/v/@openmerch/agent)](https://www.npmjs.com/package/@openmerch/agent) | Preview types for job submission and result handling |
-| [`@openmerch/provider`](./packages/provider) | [![npm](https://img.shields.io/npm/v/@openmerch/provider)](https://www.npmjs.com/package/@openmerch/provider) | Preview types for job execution backends |
+| Package | Version | Status | Description |
+|---------|---------|--------|-------------|
+| [`@openmerch/agent`](./packages/agent) | [![npm](https://img.shields.io/npm/v/@openmerch/agent)](https://www.npmjs.com/package/@openmerch/agent) | **Runtime SDK** | HTTP client for job planning, execution, and billing |
+| [`@openmerch/provider`](./packages/provider) | [![npm](https://img.shields.io/npm/v/@openmerch/provider)](https://www.npmjs.com/package/@openmerch/provider) | Preview types | TypeScript type contracts for execution backends |
 
 ## Quick Start
 
@@ -44,42 +19,37 @@ For implementation details, see the package READMEs and example projects.
 npm install @openmerch/agent
 ```
 
-Use the types in your TypeScript files:
-
 ```ts
-import type {
-  AgentConfig,
-  TaskRequest,
-  TaskResult,
-} from "@openmerch/agent";
+import { OpenMerchAgent } from "@openmerch/agent";
 
-const config: AgentConfig = {
-  endpoint: "https://api.openmerch.dev",
-  apiKey: process.env.OPENMERCH_API_KEY ?? "dev-key",
-};
+const agent = new OpenMerchAgent({
+  baseUrl: "https://api.openmerch.dev",
+  apiKey: process.env.OPENMERCH_API_KEY!,
+});
 
-const task: TaskRequest = {
-  serviceId: "lead_qualification_v1",
-  mode: "sync",
-  payload: { domain: "acme.com" },
-  maxPrice: "250000",
-};
+// check cost before committing
+const plan = await agent.planJob({
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+});
 
-const result: TaskResult = {
-  taskId: "task-demo-001",
-  success: true,
-  data: { domain: "acme.com", qualified: true },
-  cost: { amount: "250000", currency: "USD" },
-};
+// execute the job — cost accrues to your account
+const job = await agent.executeJob({
+  job_type: "lead_qualification_v1",
+  input: { domain: "acme.com" },
+  max_cost: plan.estimated_cost.max_microcents,
+  idempotency_key: `lead-acme-${Date.now()}`,
+});
 
-console.log(config.endpoint);
-console.log(task.serviceId);
-console.log(result.success);
+console.log(job.output);
+console.log(job.cost);
 ```
 
-For a runnable mocked demo, see [`examples/agent-basic`](./examples/agent-basic).
+See the [agent package README](./packages/agent) for full API reference.
 
 ### Execution Backend (Provider)
+
+> **Preview** — `@openmerch/provider` exports TypeScript types and interfaces only. Runtime functionality is under development.
 
 ```bash
 npm install @openmerch/provider
@@ -109,66 +79,40 @@ const service: ServiceDefinition = {
 
 | Example | Description |
 |---------|-------------|
-| [`agent-basic`](./examples/agent-basic) | Basic agent job planning and execution (mocked, no network) |
+| [`agent-basic`](./examples/agent-basic) | V1 SDK type surface demo (mocked, no network) |
 | [`provider-echo`](./examples/provider-echo) | Minimal execution backend that echoes job payloads (mocked, no network) |
-
-## Roadmap
-
-### Target Runtime Agent API
-
-> Not yet implemented. The runtime client below is the planned integration surface, not part of the published package today.
-
-```ts
-import { OpenMerchAgent } from "@openmerch/agent";
-
-// PLANNED API — not yet available
-const agent = new OpenMerchAgent({
-  baseUrl: "https://api.openmerch.dev",
-  apiKey: process.env.OPENMERCH_API_KEY!,
-});
-
-const plan = await agent.planJob({
-  job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
-});
-
-const job = await agent.executeJob({
-  job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
-  max_cost: plan.estimated_cost.max_microcents,
-  idempotency_key: `lead-acme-${Date.now()}`,
-});
-
-console.log(job.output);
-console.log(job.cost);
-```
 
 ## Repo Layout
 
 ```
 packages/
-  agent/        @openmerch/agent SDK
-  provider/     @openmerch/provider SDK
+  agent/        @openmerch/agent — runtime SDK
+  provider/     @openmerch/provider — preview types
 examples/
   agent-basic/     Runnable agent example
   provider-echo/   Runnable provider example
 ```
 
-## Type Evolution
+## Migration from Preview Types
 
-Types like `TaskRequest`, `ServiceQuery`, and `WalletBalance` reflect an earlier iteration of the SDK surface. These will be renamed to match the job-oriented API (e.g., `JobRequest`, `JobResult`) in an upcoming pre-1.0 release. No action needed today — the type shapes are stable.
+The `@openmerch/agent` package previously exported preview type contracts (`TaskRequest`, `ServiceQuery`, `WalletBalance`, etc.). These have been replaced by the V1 runtime SDK as a pre-1.0 breaking reset.
+
+| Old (removed) | New |
+|---|---|
+| `TaskRequest` | `ExecuteJobRequest` |
+| `TaskResult` | `JobResponse` |
+| `ServiceQuery` / `ServiceListing` | `getCatalog()` / `planJob()` |
+| `WalletBalance` | Card-on-file billing via `getBillingConfig()` |
+| `AgentConfig` (types-only) | `AgentConfig` (runtime — passed to `new OpenMerchAgent()`) |
 
 ## Development
 
 ```bash
-# Install all dependencies
-npm install
-
-# Build all packages
-npm run build
-
-# Type-check without emitting
-npm run typecheck
+npm install          # Install all workspace dependencies
+npm run build        # Build all packages and examples
+npm run typecheck    # Type-check all workspaces (no emit)
+npm run test         # Run tests across all workspaces
+npm run clean        # Remove build artifacts
 ```
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for full development guidelines.
