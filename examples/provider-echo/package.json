@@ -2,7 +2,7 @@
   "name": "example-provider-echo",
   "version": "0.0.0",
   "private": true,
-  "description": "Minimal OpenMerch provider example — echoes requests back",
+  "description": "Internal/legacy provider echo example — not part of the public SDK surface",
   "type": "module",
   "scripts": {
     "build": "tsc",

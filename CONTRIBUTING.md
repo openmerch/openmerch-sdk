@@ -20,6 +20,8 @@ packages/       Publishable SDK packages (@openmerch/*)
 examples/       Runnable examples demonstrating SDK usage
 ```
 
+The current public SDK surface is `@openmerch/agent`. Provider integrations are operator-managed; any provider-side code in this repo is internal/preview and not part of the public SDK.
+
 ## Common Commands
 
 ```bash

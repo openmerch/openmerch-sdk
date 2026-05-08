@@ -9,11 +9,10 @@ Under the hood, OpenMerch routes jobs to providers via the <a href="https://mpp.
 | Package | Version | Status | Description |
 |---------|---------|--------|-------------|
 | [`@openmerch/agent`](./packages/agent) | [![npm](https://img.shields.io/npm/v/@openmerch/agent)](https://www.npmjs.com/package/@openmerch/agent) | **Runtime SDK** | HTTP client for job planning, execution, and billing |
-| [`@openmerch/provider`](./packages/provider) | [![npm](https://img.shields.io/npm/v/@openmerch/provider)](https://www.npmjs.com/package/@openmerch/provider) | Preview types | TypeScript type contracts for execution backends |
+
+> Provider integrations are currently operator-managed. Public provider onboarding and provider SDK docs are not part of the current public SDK surface.
 
 ## Quick Start
-
-### Agent
 
 ```bash
 npm install @openmerch/agent
@@ -47,50 +46,19 @@ console.log(job.cost);
 
 See the [agent package README](./packages/agent) for full API reference.
 
-### Execution Backend (Provider)
-
-> **Preview** — `@openmerch/provider` exports TypeScript types and interfaces only. Runtime functionality is under development.
-
-```bash
-npm install @openmerch/provider
-```
-
-Use the types in your TypeScript files:
-
-```ts
-import type {
-  ProviderConfig,
-  ServiceDefinition,
-  SyncHandler,
-  ExecutionRequest,
-  ExecutionResult,
-} from "@openmerch/provider";
-
-const service: ServiceDefinition = {
-  id: "my-service",
-  name: "My Service",
-  description: "A service that does something useful",
-  modes: ["sync"],
-  pricing: { basePrice: "100", currency: "USD" },
-};
-```
-
 ## Examples
 
 | Example | Description |
 |---------|-------------|
 | [`agent-basic`](./examples/agent-basic) | V1 SDK type surface demo (mocked, no network) |
-| [`provider-echo`](./examples/provider-echo) | Minimal execution backend that echoes job payloads (mocked, no network) |
 
 ## Repo Layout
 
 ```
 packages/
   agent/        @openmerch/agent — runtime SDK
-  provider/     @openmerch/provider — preview types
 examples/
-  agent-basic/     Runnable agent example
-  provider-echo/   Runnable provider example
+  agent-basic/  Runnable agent example
 ```
 
 ## Migration from Preview Types

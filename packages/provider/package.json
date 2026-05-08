@@ -1,7 +1,8 @@
 {
   "name": "@openmerch/provider",
   "version": "0.2.6",
-  "description": "Preview TypeScript types for OpenMerch provider integrations",
+  "private": true,
+  "description": "Internal/preview TypeScript types for OpenMerch provider integrations — not part of the public SDK surface; provider onboarding is currently operator-managed",
   "license": "MIT",
   "author": "OpenMerch",
   "repository": {
@@ -15,11 +16,8 @@
   },
   "keywords": [
     "openmerch",
-    "mpp",
-    "machine-payable",
-    "ai-services",
-    "provider",
-    "sdk"
+    "internal",
+    "preview"
   ],
   "engines": {
     "node": ">=18.0.0"

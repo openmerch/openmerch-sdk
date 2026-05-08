@@ -1,8 +1,10 @@
-# Provider Echo Example
+# Provider Echo Example (internal / legacy)
 
-A minimal example showing how to define a service that executes jobs on the OpenMerch network and implement execution handlers using the `@openmerch/provider` types.
-
-This example runs locally and does not connect to the OpenMerch network. It demonstrates the type contracts that a real provider implementation would satisfy.
+> **Internal / legacy — not part of the current public SDK surface.**
+>
+> Provider integrations on OpenMerch are currently operator-managed. This example exists only as a reference for the internal `@openmerch/provider` type contracts and is not intended for external developers building against OpenMerch.
+>
+> If you are building an agent, see [`examples/agent-basic`](../agent-basic) instead.
 
 ## Run
 
@@ -19,7 +21,7 @@ npm start
 ## What It Does
 
 1. Defines an echo service with sync and stream execution modes
-2. Implements handler functions that satisfy the SDK type contracts
+2. Implements handler functions that satisfy the internal type contracts
 3. Demonstrates how a provider would process incoming job execution requests
 
 The output is printed to the console — no network connection required.
