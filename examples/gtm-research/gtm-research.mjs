@@ -3,12 +3,14 @@ import { randomUUID } from "node:crypto";
 
 const domain = process.argv[2];
 if (!domain) {
-  console.error("Usage: OPENMERCH_API_KEY=om_live_... node gtm-research.mjs <domain> [keywords]");
-  console.error("Example: node gtm-research.mjs amazon.com 'director VP'");
+  console.error("Usage: OPENMERCH_API_KEY=om_live_... node gtm-research.mjs <domain> [keywords] [person-id]");
+  console.error("  Step 1+2: node gtm-research.mjs amazon.com 'workforce planning'");
+  console.error("  Step 3:   node gtm-research.mjs amazon.com 'workforce planning' <person-id>");
   process.exit(1);
 }
 
 const keywords = process.argv[3] ?? "workforce planning";
+const personId = process.argv[4] ?? null;
 
 const apiKey = process.env.OPENMERCH_API_KEY;
 if (!apiKey) {
@@ -138,67 +140,51 @@ if (!contactsJobType) {
   }
 }
 
-// Step 1: Company enrichment
-console.log(`\nFetching company data for ${domain}...`);
-const companyJob = await planAndExecute(
-  COMPANY_JOB_TYPE,
-  { company_domain: domain },
-  "Company enrichment",
-);
-
-// Step 2: People search
-console.log(`Searching for "${keywords}" contacts at ${domain}...`);
-const contactsJob = await planAndExecute(
-  contactsJobType,
-  {
-    operation: "people-search",
-    q_organization_domains: [domain],
-    q_keywords: keywords,
-    per_page: 25,
-    page: 1,
-  },
-  "Contacts",
-);
-
-// Print summary
 const fmt = (microcents) => `$${(microcents / 10_000_000).toFixed(4)} USD`;
 
-console.log("\n=== Company ===");
-console.log(JSON.stringify(companyJob.output, null, 2));
-console.log(`Cost: ${fmt(companyJob.cost.total_microcents)}  Job: ${companyJob.job_id}`);
-
-console.log("\n=== Contacts ===");
-console.log(JSON.stringify(contactsJob.output, null, 2));
-console.log(`Cost: ${fmt(contactsJob.cost.total_microcents)}  Job: ${contactsJob.job_id}`);
-
-// Step 3: Enrich first contact
-const peopleArray =
-  contactsJob.output?.people ??
-  contactsJob.output?.contacts ??
-  contactsJob.output?.results ??
-  contactsJob.output?.data ??
-  [];
-const firstPerson = peopleArray[0];
-
-if (!firstPerson?.id && !firstPerson?.person_id) {
-  console.log("\nNo person ID in contacts output — skipping individual enrichment.");
-} else {
-  const personId = firstPerson.id ?? firstPerson.person_id;
-  const personInput = {
-    operation: "people-enrichment",
-    id: personId,
-    ...(firstPerson.first_name || firstPerson.firstName
-      ? { first_name: firstPerson.first_name ?? firstPerson.firstName }
-      : {}),
-    ...(firstPerson.last_name || firstPerson.lastName
-      ? { last_name: firstPerson.last_name ?? firstPerson.lastName }
-      : {}),
-    domain,
-  };
+if (personId) {
+  // Step 3: Enrich a specific contact by ID
   console.log(`\nEnriching contact ${personId}...`);
-  const personJob = await planAndExecute(contactsJobType, personInput, "Person enrichment");
+  const personJob = await planAndExecute(
+    contactsJobType,
+    { operation: "people-enrichment", id: personId, domain },
+    "Person enrichment",
+  );
 
   console.log("\n=== Person ===");
   console.log(JSON.stringify(personJob.output, null, 2));
   console.log(`Cost: ${fmt(personJob.cost.total_microcents)}  Job: ${personJob.job_id}`);
+} else {
+  // Step 1: Company enrichment
+  console.log(`\nFetching company data for ${domain}...`);
+  const companyJob = await planAndExecute(
+    COMPANY_JOB_TYPE,
+    { company_domain: domain },
+    "Company enrichment",
+  );
+
+  // Step 2: People search
+  console.log(`Searching for "${keywords}" contacts at ${domain}...`);
+  const contactsJob = await planAndExecute(
+    contactsJobType,
+    {
+      operation: "people-search",
+      q_organization_domains: [domain],
+      q_keywords: keywords,
+      per_page: 25,
+      page: 1,
+    },
+    "Contacts",
+  );
+
+  console.log("\n=== Company ===");
+  console.log(JSON.stringify(companyJob.output, null, 2));
+  console.log(`Cost: ${fmt(companyJob.cost.total_microcents)}  Job: ${companyJob.job_id}`);
+
+  console.log("\n=== Contacts ===");
+  console.log(JSON.stringify(contactsJob.output, null, 2));
+  console.log(`Cost: ${fmt(contactsJob.cost.total_microcents)}  Job: ${contactsJob.job_id}`);
+
+  console.log("\nTo enrich a specific contact, copy their id from the output above and run:");
+  console.log(`  OPENMERCH_API_KEY=... node gtm-research.mjs ${domain} '${keywords}' <person-id> | less +G`);
 }
