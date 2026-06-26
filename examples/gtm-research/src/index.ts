@@ -4,9 +4,9 @@ import { randomUUID } from "node:crypto";
 
 const domain = process.argv[2];
 if (!domain) {
-  console.error("Usage: npm start -- <domain> [keywords] [person-id]");
+  console.error("Usage: npm start -- domain keywords person-id");
   console.error("  Step 1+2: npm start -- amazon.com 'workforce planning'");
-  console.error("  Step 3:   npm start -- amazon.com 'workforce planning' <person-id>");
+  console.error("  Step 3:   npm start -- amazon.com 'workforce planning' person-id");
   process.exit(1);
 }
 
@@ -143,5 +143,5 @@ if (personId) {
   console.log(`Cost: ${formatUSD(contactsJob.cost.total_microcents)}  Job: ${contactsJob.job_id}`);
 
   console.log("\nTo enrich a specific contact, copy their id from the output above and run:");
-  console.log(`  OPENMERCH_API_KEY=... npm start -- ${domain} '${keywords}' <person-id> | less +G`);
+  console.log(`  OPENMERCH_API_KEY=... npm start -- ${domain} '${keywords}' PERSON_ID | less +G`);
 }

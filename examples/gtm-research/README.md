@@ -22,7 +22,7 @@ curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/
 OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' | less +G
 
 # Step 3: enrich a specific contact — copy their id from the Contacts output above
-OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' <person-id> | less +G
+OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' person-id | less +G
 ```
 
 The second argument is the people-search keyword — defaults to `workforce planning` if omitted. The third argument is an optional person ID for individual contact enrichment.
@@ -42,7 +42,7 @@ cd examples/gtm-research
 OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'workforce planning' | less +G
 
 # Step 3
-OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'workforce planning' <person-id> | less +G
+OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'workforce planning' person-id | less +G
 ```
 
 ## What It Does
