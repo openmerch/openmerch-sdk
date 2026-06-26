@@ -35,7 +35,7 @@ Use `OPENMERCH_BASE_URL` to point at a different environment:
 OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... npm start -- amazon.com | less +G
 ```
 
-> **Navigating the output:** `+G` opens at the end. Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
+> **Navigating the Terminal output:** Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
 
 ## What It Does
 

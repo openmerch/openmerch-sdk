@@ -22,7 +22,7 @@ npm install && npm run build
 cd examples/agent-basic && npm start | less +G
 ```
 
-> **Navigating the output:** `+G` opens at the end. Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
+> **Navigating the Terminal output:** Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
 
 ## What It Does
 
