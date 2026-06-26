@@ -26,8 +26,6 @@ cd examples/agent-basic && npm start | less +G
 
 ## What It Does
 
-1. Constructs a job execution request using `TaskRequest`
-2. Shows a mock job result matching `TaskResult`
-3. Demonstrates execution mode selection (sync, async, streaming)
-
-The output is printed to the console — no network connection required.
+1. Constructs a typed `PlanJobRequest` and shows a mock `PlanJobResponse` with cost ranges
+2. Constructs a typed `ExecuteJobRequest` and shows a mock `JobResponse` with output and cost
+3. Demonstrates the V1 SDK type surface — no network connection required

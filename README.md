@@ -58,9 +58,11 @@ See the [agent package README](./packages/agent) for full API reference.
 
 ```
 packages/
-  agent/        @openmerch/agent — runtime SDK
+  agent/          @openmerch/agent — runtime SDK
 examples/
-  agent-basic/  Runnable agent example
+  quick-start/    Zero-dep live-API script (no install)
+  agent-basic/    V1 SDK type surface demo (mocked)
+  gtm-research/   Sequential enrichment via SDK (live API)
 ```
 
 ## Migration from Preview Types
