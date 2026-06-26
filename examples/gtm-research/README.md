@@ -16,16 +16,13 @@ This is the pattern a research agent uses: submit typed data jobs and get struct
 Download and run — no clone, no install:
 
 ```bash
-curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/gtm-research/gtm-research.mjs
-
 # Step 1 + 2: company data + contacts search
+curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/gtm-research/gtm-research.mjs
 OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' | less +G
 
 # Step 3: enrich a specific contact — copy their id from the Contacts output above
 OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' person-id | less +G
 ```
-
-The second argument is the people-search keyword — defaults to `workforce planning` if omitted. The third argument is an optional person ID for individual contact enrichment.
 
 > **Navigating the Terminal output:** Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
 
