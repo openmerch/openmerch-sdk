@@ -1,0 +1,22 @@
+{
+  "name": "example-gtm-research",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Sequential enrichment example — company data then contacts via the OpenMerch SDK",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@openmerch/agent": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
