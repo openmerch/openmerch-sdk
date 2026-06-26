@@ -4,10 +4,12 @@ import { randomUUID } from "node:crypto";
 
 const domain = process.argv[2];
 if (!domain) {
-  console.error("Usage: npm start -- <domain>");
-  console.error("Example: npm start -- amazon.com");
+  console.error("Usage: npm start -- <domain> [keywords]");
+  console.error("Example: npm start -- amazon.com 'director VP'");
   process.exit(1);
 }
+
+const keywords = process.argv[3] ?? "director VP";
 
 const apiKey = process.env.OPENMERCH_API_KEY;
 if (!apiKey) {
@@ -103,25 +105,16 @@ const contactsJobType = resolveJobType(
 console.log(`\nFetching company data for ${domain}...`);
 const companyJob = await runJob(companyJobType, { company_domain: domain }, "Company enrichment");
 
-// Step 2: Contacts — pass company name from step 1 and operation from catalog if available
-const companyOutput = companyJob.output as Record<string, unknown> | null | undefined;
-const companyName =
-  typeof companyOutput?.name === "string"
-    ? companyOutput.name
-    : typeof companyOutput?.company_name === "string"
-    ? companyOutput.company_name
-    : undefined;
-
-const contactsCatalogEntry = catalog.find((e) => e.job_type === contactsJobType);
-const contactsOperation = contactsCatalogEntry?.operations?.[0];
-
-console.log(`Fetching contacts for ${domain}${companyName ? ` (${companyName})` : ""}...`);
+// Step 2: People search — find contacts at the company matching the keywords
+console.log(`Searching for "${keywords}" contacts at ${domain}...`);
 const contactsJob = await runJob(
   contactsJobType,
   {
-    company_domain: domain,
-    ...(companyName ? { company_name: companyName } : {}),
-    ...(contactsOperation ? { operation: contactsOperation } : {}),
+    operation: "people-search",
+    q_organization_domains: [domain],
+    q_keywords: keywords,
+    per_page: 25,
+    page: 1,
   },
   "Contacts",
 );
