@@ -17,7 +17,7 @@ Clone and run — no prior setup needed:
 git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git
 cd openmerch-sdk && npm install && npm run build
 cd examples/gtm-research
-OPENMERCH_API_KEY=om_live_... npm start -- acme.com
+OPENMERCH_API_KEY=om_live_... npm start -- amazon.com
 ```
 
 If you already have the repo cloned:
@@ -26,13 +26,13 @@ If you already have the repo cloned:
 # From repo root
 npm install && npm run build
 cd examples/gtm-research
-OPENMERCH_API_KEY=om_live_... npm start -- acme.com
+OPENMERCH_API_KEY=om_live_... npm start -- amazon.com
 ```
 
 Use `OPENMERCH_BASE_URL` to point at a different environment:
 
 ```bash
-OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... npm start -- acme.com
+OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... npm start -- amazon.com
 ```
 
 ## What It Does
@@ -47,34 +47,34 @@ OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... npm s
 <!-- illustrative — actual output varies by domain and provider -->
 
 ```
-Fetching company data for stripe.com...
-Fetching contacts for stripe.com (Stripe)...
+Fetching company data for amazon.com...
+Fetching contacts for amazon.com (Amazon)...
 
 === Company ===
 {
-  "company_name": "Stripe",
-  "domain": "stripe.com",
-  "industry": "Financial Services",
-  "description": "Stripe builds economic infrastructure for the internet, enabling businesses of all sizes to accept payments and manage revenue online.",
-  "employee_count": 8000,
-  "location": { "city": "San Francisco", "state": "CA", "country": "US" },
-  "website": "https://stripe.com"
+  "company_name": "Amazon",
+  "domain": "amazon.com",
+  "industry": "E-Commerce & Cloud Computing",
+  "description": "Amazon is a multinational technology company focusing on e-commerce, cloud computing, digital streaming, and artificial intelligence.",
+  "employee_count": 1500000,
+  "location": { "city": "Seattle", "state": "WA", "country": "US" },
+  "website": "https://amazon.com"
 }
 Cost: $0.0200 USD  Job: job_01HXK9QVBN3M4RPYG2WJKFZ8
 
 === Contacts ===
 [
   {
-    "name": "Sarah Chen",
-    "title": "Head of Enterprise Sales",
-    "email": "s.chen@stripe.com",
-    "linkedin_url": "https://www.linkedin.com/in/sarahchen-stripe"
+    "name": "Rachel Torres",
+    "title": "VP Enterprise Sales",
+    "email": "r.torres@amazon.com",
+    "linkedin_url": "https://www.linkedin.com/in/racheltor-amazon"
   },
   {
-    "name": "Marcus Webb",
-    "title": "VP Revenue Operations",
-    "email": "m.webb@stripe.com",
-    "linkedin_url": "https://www.linkedin.com/in/marcuswebb"
+    "name": "David Kim",
+    "title": "Head of Global Accounts",
+    "email": "d.kim@amazon.com",
+    "linkedin_url": "https://www.linkedin.com/in/davidkim-amazon"
   }
 ]
 Cost: $0.0350 USD  Job: job_01HXK9QVCN5M4RPYG2WJKFZ9

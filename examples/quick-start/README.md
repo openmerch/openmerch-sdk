@@ -13,20 +13,20 @@ Download the script and run it — no clone, no install:
 
 ```bash
 curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/quick-start/quick-start.mjs
-OPENMERCH_API_KEY=om_live_... node quick-start.mjs acme.com
+OPENMERCH_API_KEY=om_live_... node quick-start.mjs amazon.com
 ```
 
 If you already have the repo cloned:
 
 ```bash
 cd examples/quick-start
-OPENMERCH_API_KEY=om_live_... node quick-start.mjs acme.com
+OPENMERCH_API_KEY=om_live_... node quick-start.mjs amazon.com
 ```
 
 Use `OPENMERCH_BASE_URL` to point at a different environment:
 
 ```bash
-OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node quick-start.mjs acme.com
+OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node quick-start.mjs amazon.com
 ```
 
 ## What It Does
@@ -43,18 +43,18 @@ OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node 
 ```
 === Result ===
 {
-  "company_name": "Stripe",
-  "domain": "stripe.com",
-  "industry": "Financial Services",
-  "description": "Stripe builds economic infrastructure for the internet, enabling businesses of all sizes to accept payments and manage revenue online.",
-  "employee_count": 8000,
+  "company_name": "Amazon",
+  "domain": "amazon.com",
+  "industry": "E-Commerce & Cloud Computing",
+  "description": "Amazon is a multinational technology company focusing on e-commerce, cloud computing, digital streaming, and artificial intelligence.",
+  "employee_count": 1500000,
   "location": {
-    "city": "San Francisco",
-    "state": "CA",
+    "city": "Seattle",
+    "state": "WA",
     "country": "US"
   },
-  "website": "https://stripe.com",
-  "linkedin_url": "https://www.linkedin.com/company/stripe"
+  "website": "https://amazon.com",
+  "linkedin_url": "https://www.linkedin.com/company/amazon"
 }
 
 Cost:   $0.0200 USD

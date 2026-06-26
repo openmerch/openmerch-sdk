@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 const domain = process.argv[2];
 if (!domain) {
   console.error("Usage: OPENMERCH_API_KEY=om_live_... node quick-start.mjs <domain>");
-  console.error("Example: node quick-start.mjs acme.com");
+  console.error("Example: node quick-start.mjs amazon.com");
   process.exit(1);
 }
 

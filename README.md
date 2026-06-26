@@ -29,15 +29,15 @@ const agent = new OpenMerchAgent({
 // check cost before committing
 const plan = await agent.planJob({
   job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
+  input: { domain: "amazon.com" },
 });
 
 // execute the job — cost accrues to your account
 const job = await agent.executeJob({
   job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
+  input: { domain: "amazon.com" },
   max_cost: plan.estimated_cost.max_microcents,
-  idempotency_key: `lead-acme-${Date.now()}`,
+  idempotency_key: `lead-amazon-${Date.now()}`,
 });
 
 console.log(job.output);

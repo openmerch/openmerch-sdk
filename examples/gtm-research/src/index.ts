@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 const domain = process.argv[2];
 if (!domain) {
   console.error("Usage: npm start -- <domain>");
-  console.error("Example: npm start -- acme.com");
+  console.error("Example: npm start -- amazon.com");
   process.exit(1);
 }
 

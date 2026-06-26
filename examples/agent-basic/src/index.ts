@@ -40,7 +40,7 @@ console.log();
 
 const planRequest: PlanJobRequest = {
   job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
+  input: { domain: "amazon.com" },
 };
 
 const mockPlanResponse: PlanJobResponse = {
@@ -70,9 +70,9 @@ console.log();
 
 const executeRequest: ExecuteJobRequest = {
   job_type: "lead_qualification_v1",
-  input: { domain: "acme.com" },
+  input: { domain: "amazon.com" },
   max_cost: mockPlanResponse.estimated_cost.max_microcents,
-  idempotency_key: `lead-acme-example`,
+  idempotency_key: `lead-amazon-example`,
 };
 
 const mockJobResponse: JobResponse = {
@@ -80,7 +80,7 @@ const mockJobResponse: JobResponse = {
   job_type: "lead_qualification_v1",
   status: "completed",
   output: {
-    domain: "acme.com",
+    domain: "amazon.com",
     qualified: true,
     score: 87,
     signals: ["enterprise", "high_traffic", "active_hiring"],
