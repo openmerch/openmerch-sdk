@@ -6,14 +6,20 @@ This example runs locally with mocked data and does not connect to the OpenMerch
 
 ## Run
 
-```bash
-# From the repo root
-npm install
-npm run build
+Clone and run — no prior setup needed:
 
-# Run the example
-cd examples/agent-basic
-npm start
+```bash
+git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git
+cd openmerch-sdk/examples/agent-basic
+npm install && npm run build && npm start
+```
+
+If you already have the repo cloned:
+
+```bash
+# From repo root
+npm install && npm run build
+cd examples/agent-basic && npm start
 ```
 
 ## What It Does

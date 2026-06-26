@@ -11,21 +11,28 @@ This is the pattern a research agent uses: submit typed data jobs and get struct
 
 ## Run
 
-```bash
-# From the repo root
-npm install
-npm run build
+Clone and run — no prior setup needed:
 
-# Then run the example
+```bash
+git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git
+cd openmerch-sdk && npm install && npm run build
 cd examples/gtm-research
-export OPENMERCH_API_KEY=om_live_your_key_here
-npm start -- acme.com
+OPENMERCH_API_KEY=om_live_... npm start -- acme.com
+```
+
+If you already have the repo cloned:
+
+```bash
+# From repo root
+npm install && npm run build
+cd examples/gtm-research
+OPENMERCH_API_KEY=om_live_... npm start -- acme.com
 ```
 
 Use `OPENMERCH_BASE_URL` to point at a different environment:
 
 ```bash
-OPENMERCH_BASE_URL=https://api.openmerch.dev npm start -- acme.com
+OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... npm start -- acme.com
 ```
 
 ## What It Does
