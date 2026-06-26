@@ -2,6 +2,10 @@
 
 A TypeScript SDK example that runs two sequential enrichment jobs — company data first, then contacts — against the live OpenMerch API.
 
+This is the **integration reference** for developers building agents with the `@openmerch/agent` SDK. It requires cloning the repo and compiling TypeScript.
+
+> **Want zero-setup?** Use [`quick-start`](../quick-start) instead — one `curl` and you're running against the live API, no install needed.
+
 This is the pattern a research agent uses: submit typed data jobs and get structured results back, without stitching together multiple data providers.
 
 ## Prerequisites
@@ -11,7 +15,7 @@ This is the pattern a research agent uses: submit typed data jobs and get struct
 
 ## Run
 
-Clone and run — no prior setup needed:
+This example is TypeScript and requires the full repo to build. Clone, build, and run:
 
 ```bash
 git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git

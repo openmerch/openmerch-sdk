@@ -6,7 +6,7 @@ This example runs locally with mocked data and does not connect to the OpenMerch
 
 ## Run
 
-Clone and run — no prior setup needed:
+This example is TypeScript and must be compiled before running — it requires the full repo. Clone, build, and run:
 
 ```bash
 git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git
