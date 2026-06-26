@@ -16,18 +16,6 @@ curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/
 OPENMERCH_API_KEY=om_live_... node quick-start.mjs amazon.com | less +G
 ```
 
-If you already have the repo cloned:
-
-```bash
-cd examples/quick-start
-OPENMERCH_API_KEY=om_live_... node quick-start.mjs amazon.com | less +G
-```
-
-Use `OPENMERCH_BASE_URL` to point at a different environment:
-
-```bash
-OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node quick-start.mjs amazon.com | less +G
-```
 
 > **Navigating the Terminal output:** Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
 
