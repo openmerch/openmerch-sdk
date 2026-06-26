@@ -2,9 +2,7 @@
 
 A TypeScript SDK example that runs two sequential enrichment jobs — company data first, then contacts — against the live OpenMerch API.
 
-This is the **integration reference** for developers building agents with the `@openmerch/agent` SDK. It requires cloning the repo and compiling TypeScript.
-
-> **Want zero-setup?** Use [`quick-start`](../quick-start) instead — one `curl` and you're running against the live API, no install needed.
+> **Quickest path:** `curl -O` the zero-dep script below and run it in two lines. The TypeScript SDK version (`src/index.ts`) is available for developers integrating the `@openmerch/agent` package.
 
 This is the pattern a research agent uses: submit typed data jobs and get structured results back, without stitching together multiple data providers.
 
@@ -15,7 +13,24 @@ This is the pattern a research agent uses: submit typed data jobs and get struct
 
 ## Run
 
-This example is TypeScript and requires the full repo to build. Clone, build, and run:
+Download and run — no clone, no install:
+
+```bash
+curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/gtm-research/gtm-research.mjs
+OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'director VP' | less +G
+```
+
+The second argument is the people-search keyword — defaults to `director VP` if omitted:
+
+```bash
+OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' | less +G
+```
+
+> **Navigating the Terminal output:** Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
+
+### Developer integration (TypeScript SDK)
+
+If you're integrating the `@openmerch/agent` SDK into your own project, `src/index.ts` shows the same flow using the full typed SDK. It requires the repo:
 
 ```bash
 git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git
@@ -24,28 +39,11 @@ cd examples/gtm-research
 OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'director VP' | less +G
 ```
 
-If you already have the repo cloned:
-
-```bash
-# From repo root
-npm install && npm run build
-cd examples/gtm-research
-OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'director VP' | less +G
-```
-
-The second argument is the people-search keyword — defaults to `director VP` if omitted. Use it to target specific roles:
-
-```bash
-OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'workforce planning' | less +G
-```
-
 Use `OPENMERCH_BASE_URL` to point at a different environment:
 
 ```bash
-OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'director VP' | less +G
+OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'director VP' | less +G
 ```
-
-> **Navigating the Terminal output:** Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
 
 ## What It Does
 

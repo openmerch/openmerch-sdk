@@ -50,9 +50,8 @@ See the [agent package README](./packages/agent) for full API reference.
 
 | Example | Description |
 |---------|-------------|
-| [`agent-basic`](./examples/agent-basic) | V1 SDK type surface demo (mocked, no network) |
 | [`quick-start`](./examples/quick-start) | Zero-dep live-API script — company enrichment in one file, no install |
-| [`gtm-research`](./examples/gtm-research) | Sequential enrichment via SDK — company data then contacts in two jobs |
+| [`gtm-research`](./examples/gtm-research) | Sequential enrichment — company data then contacts, curl-friendly or TypeScript SDK |
 
 ## Repo Layout
 
@@ -61,8 +60,7 @@ packages/
   agent/          @openmerch/agent — runtime SDK
 examples/
   quick-start/    Zero-dep live-API script (no install)
-  agent-basic/    V1 SDK type surface demo (mocked)
-  gtm-research/   Sequential enrichment via SDK (live API)
+  gtm-research/   Sequential enrichment — curl-friendly or TypeScript SDK
 ```
 
 ## Migration from Preview Types
