@@ -46,7 +46,8 @@ OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node 
 1. Discovers available job types from the live catalog
 2. Runs a company enrichment job for the given domain
 3. Runs a people search (`people-search` operation) using `q_organization_domains` + `q_keywords` to find matching contacts
-4. Prints a summary of both results with cost and job ID
+4. Enriches the first contact individually (`people-enrichment` operation) using their person ID and name from step 3's results
+5. Prints a summary of all three results with cost and job ID
 
 ## Sample Output
 
@@ -70,9 +71,25 @@ Cost: $0.0200 USD  Job: job_01HXK9QVBN3M4RPYG2WJKFZ8
 
 === Contacts ===
 [
-  { "name": "Sarah M.", "title": "Director, Enterprise Sales", "email": "s.m@amazon.com" },
-  { "name": "James K.", "title": "VP Global Accounts", "email": "j.k@amazon.com" },
-  { "name": "Priya R.", "title": "Director, Partner Development", "email": "p.r@amazon.com" }
+  { "id": "55708d7a736964670fa50e00", "first_name": "Sarah", "last_name": "M.", "title": "Director, Workforce Planning", "email": "s.m@amazon.com" },
+  { "id": "55708d7a736964670fa50e01", "first_name": "James", "last_name": "K.", "title": "VP Global Workforce Strategy", "email": "j.k@amazon.com" }
 ]
 Cost: $0.0310 USD  Job: job_01HXK9QVCN5M4RPYG2WJKFZ9
+
+Enriching contact 55708d7a736964670fa50e00...
+
+=== Person ===
+{
+  "id": "55708d7a736964670fa50e00",
+  "first_name": "Sarah",
+  "last_name": "M.",
+  "title": "Director, Workforce Planning",
+  "email": "s.m@amazon.com",
+  "linkedin_url": "https://linkedin.com/in/sarahm-amazon",
+  "location": { "city": "Seattle", "state": "WA", "country": "US" },
+  "employment_history": [
+    { "company": "Amazon", "title": "Director, Workforce Planning", "start_year": 2019 }
+  ]
+}
+Cost: $0.0150 USD  Job: job_01HXK9QVCN5M4RPYG2WJKFZA
 ```

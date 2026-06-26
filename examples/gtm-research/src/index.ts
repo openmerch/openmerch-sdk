@@ -127,3 +127,35 @@ console.log(`Cost: ${formatUSD(companyJob.cost.total_microcents)}  Job: ${compan
 console.log("\n=== Contacts ===");
 console.log(JSON.stringify(contactsJob.output, null, 2));
 console.log(`Cost: ${formatUSD(contactsJob.cost.total_microcents)}  Job: ${contactsJob.job_id}`);
+
+// Step 3: Enrich first contact
+const output = contactsJob.output as Record<string, unknown>;
+const peopleArray: Record<string, unknown>[] =
+  (output?.people as Record<string, unknown>[]) ??
+  (output?.contacts as Record<string, unknown>[]) ??
+  (output?.results as Record<string, unknown>[]) ??
+  (output?.data as Record<string, unknown>[]) ??
+  [];
+const firstPerson = peopleArray[0] as Record<string, unknown> | undefined;
+const personId = firstPerson?.id ?? firstPerson?.person_id;
+
+if (!firstPerson || !personId) {
+  console.log("\nNo person ID in contacts output — skipping individual enrichment.");
+} else {
+  const personInput: Record<string, unknown> = {
+    operation: "people-enrichment",
+    id: personId,
+    domain,
+  };
+  const fn = firstPerson.first_name ?? firstPerson.firstName;
+  const ln = firstPerson.last_name ?? firstPerson.lastName;
+  if (fn) personInput.first_name = fn;
+  if (ln) personInput.last_name = ln;
+
+  console.log(`\nEnriching contact ${personId}...`);
+  const personJob = await runJob(contactsJobType, personInput, "Person enrichment");
+
+  console.log("\n=== Person ===");
+  console.log(JSON.stringify(personJob.output, null, 2));
+  console.log(`Cost: ${formatUSD(personJob.cost.total_microcents)}  Job: ${personJob.job_id}`);
+}

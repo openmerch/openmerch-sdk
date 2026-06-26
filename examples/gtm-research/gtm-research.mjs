@@ -170,3 +170,35 @@ console.log(`Cost: ${fmt(companyJob.cost.total_microcents)}  Job: ${companyJob.j
 console.log("\n=== Contacts ===");
 console.log(JSON.stringify(contactsJob.output, null, 2));
 console.log(`Cost: ${fmt(contactsJob.cost.total_microcents)}  Job: ${contactsJob.job_id}`);
+
+// Step 3: Enrich first contact
+const peopleArray =
+  contactsJob.output?.people ??
+  contactsJob.output?.contacts ??
+  contactsJob.output?.results ??
+  contactsJob.output?.data ??
+  [];
+const firstPerson = peopleArray[0];
+
+if (!firstPerson?.id && !firstPerson?.person_id) {
+  console.log("\nNo person ID in contacts output — skipping individual enrichment.");
+} else {
+  const personId = firstPerson.id ?? firstPerson.person_id;
+  const personInput = {
+    operation: "people-enrichment",
+    id: personId,
+    ...(firstPerson.first_name || firstPerson.firstName
+      ? { first_name: firstPerson.first_name ?? firstPerson.firstName }
+      : {}),
+    ...(firstPerson.last_name || firstPerson.lastName
+      ? { last_name: firstPerson.last_name ?? firstPerson.lastName }
+      : {}),
+    domain,
+  };
+  console.log(`\nEnriching contact ${personId}...`);
+  const personJob = await planAndExecute(contactsJobType, personInput, "Person enrichment");
+
+  console.log("\n=== Person ===");
+  console.log(JSON.stringify(personJob.output, null, 2));
+  console.log(`Cost: ${fmt(personJob.cost.total_microcents)}  Job: ${personJob.job_id}`);
+}
