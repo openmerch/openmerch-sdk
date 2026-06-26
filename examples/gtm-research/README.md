@@ -17,14 +17,10 @@ Download and run — no clone, no install:
 
 ```bash
 curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/gtm-research/gtm-research.mjs
-OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'director VP' | less +G
-```
-
-The second argument is the people-search keyword — defaults to `director VP` if omitted:
-
-```bash
 OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' | less +G
 ```
+
+The second argument is the people-search keyword — defaults to `workforce planning` if omitted.
 
 > **Navigating the Terminal output:** Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
 
@@ -36,13 +32,13 @@ If you're integrating the `@openmerch/agent` SDK into your own project, `src/ind
 git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git
 cd openmerch-sdk && npm install && npm run build
 cd examples/gtm-research
-OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'director VP' | less +G
+OPENMERCH_API_KEY=om_live_... npm start -- amazon.com 'workforce planning' | less +G
 ```
 
 Use `OPENMERCH_BASE_URL` to point at a different environment:
 
 ```bash
-OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'director VP' | less +G
+OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node gtm-research.mjs amazon.com 'workforce planning' | less +G
 ```
 
 ## What It Does
@@ -58,7 +54,7 @@ OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node 
 
 ```
 Fetching company data for amazon.com...
-Searching for "director VP" contacts at amazon.com...
+Searching for "workforce planning" contacts at amazon.com...
 
 === Company ===
 {

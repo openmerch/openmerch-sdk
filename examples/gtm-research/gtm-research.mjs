@@ -8,7 +8,7 @@ if (!domain) {
   process.exit(1);
 }
 
-const keywords = process.argv[3] ?? "director VP";
+const keywords = process.argv[3] ?? "workforce planning";
 
 const apiKey = process.env.OPENMERCH_API_KEY;
 if (!apiKey) {
