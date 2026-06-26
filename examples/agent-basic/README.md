@@ -11,7 +11,7 @@ Clone and run — no prior setup needed:
 ```bash
 git clone --depth 1 https://github.com/openmerch/openmerch-sdk.git
 cd openmerch-sdk/examples/agent-basic
-npm install && npm run build && npm start
+npm install && npm run build && npm start | less +G
 ```
 
 If you already have the repo cloned:
@@ -19,8 +19,10 @@ If you already have the repo cloned:
 ```bash
 # From repo root
 npm install && npm run build
-cd examples/agent-basic && npm start
+cd examples/agent-basic && npm start | less +G
 ```
+
+> **Navigating the output:** `+G` opens at the end. Press `g` to jump to the top, `G` to jump to the bottom, `q` to quit.
 
 ## What It Does
 
