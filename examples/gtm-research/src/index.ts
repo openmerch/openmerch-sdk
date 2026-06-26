@@ -48,7 +48,7 @@ function resolveJobType(
 }
 
 function formatUSD(microcents: number): string {
-  return `$${(microcents / 1_000_000).toFixed(4)} USD`;
+  return `$${(microcents / 10_000_000).toFixed(4)} USD`;
 }
 
 async function runJob(

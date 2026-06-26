@@ -161,7 +161,7 @@ const contactsJob = await planAndExecute(
 );
 
 // Print summary
-const fmt = (microcents) => `$${(microcents / 1_000_000).toFixed(4)} USD`;
+const fmt = (microcents) => `$${(microcents / 10_000_000).toFixed(4)} USD`;
 
 console.log("\n=== Company ===");
 console.log(JSON.stringify(companyJob.output, null, 2));

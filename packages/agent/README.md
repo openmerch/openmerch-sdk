@@ -133,7 +133,7 @@ const result = await agent.pollJob("job_01HXK9...", 1000, 300000);
 
 ## Billing
 
-Jobs are billed to your card on file. Cost values are in microcents (1 USD = 1,000,000 microcents).
+Jobs are billed to your card on file. Cost values are in microcents (1 USD = 10,000,000 microcents; 1 cent = 100,000 microcents).
 
 ```ts
 // Get Stripe publishable key for client-side setup

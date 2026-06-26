@@ -107,7 +107,7 @@ if (job.status === "cancelled") {
   process.exit(1);
 }
 
-const costUSD = (job.cost.total_microcents / 1_000_000).toFixed(4);
+const costUSD = (job.cost.total_microcents / 10_000_000).toFixed(4);
 console.log("\n=== Result ===");
 console.log(JSON.stringify(job.output, null, 2));
 console.log(`\nCost:   $${costUSD} USD`);
