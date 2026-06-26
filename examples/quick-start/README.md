@@ -9,14 +9,17 @@ A zero-dependency script that runs a live company enrichment job against the Ope
 
 ## Run
 
+Download the script and run it — no clone, no install:
+
 ```bash
-export OPENMERCH_API_KEY=om_live_your_key_here
-node quick-start.mjs acme.com
+curl -O https://raw.githubusercontent.com/openmerch/openmerch-sdk/main/examples/quick-start/quick-start.mjs
+OPENMERCH_API_KEY=om_live_... node quick-start.mjs acme.com
 ```
 
-Or inline:
+If you already have the repo cloned:
 
 ```bash
+cd examples/quick-start
 OPENMERCH_API_KEY=om_live_... node quick-start.mjs acme.com
 ```
 
