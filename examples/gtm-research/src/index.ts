@@ -103,7 +103,7 @@ const contactsJobType = resolveJobType(
 console.log(`\nFetching company data for ${domain}...`);
 const companyJob = await runJob(companyJobType, { company_domain: domain }, "Company enrichment");
 
-// Step 2: Contacts — pass company name from step 1 if available
+// Step 2: Contacts — pass company name from step 1 and operation from catalog if available
 const companyOutput = companyJob.output as Record<string, unknown> | null | undefined;
 const companyName =
   typeof companyOutput?.name === "string"
@@ -112,12 +112,16 @@ const companyName =
     ? companyOutput.company_name
     : undefined;
 
+const contactsCatalogEntry = catalog.find((e) => e.job_type === contactsJobType);
+const contactsOperation = contactsCatalogEntry?.operations?.[0];
+
 console.log(`Fetching contacts for ${domain}${companyName ? ` (${companyName})` : ""}...`);
 const contactsJob = await runJob(
   contactsJobType,
   {
     company_domain: domain,
     ...(companyName ? { company_name: companyName } : {}),
+    ...(contactsOperation ? { operation: contactsOperation } : {}),
   },
   "Contacts",
 );
