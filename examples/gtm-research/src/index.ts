@@ -62,7 +62,9 @@ async function runJob(
   let job = await agent.executeJob({
     job_type: jobType,
     input,
-    max_cost: plan.estimated_cost.max_microcents,
+    max_cost:
+      (plan as typeof plan & { quoted_customer_price_microcents?: number })
+        .quoted_customer_price_microcents ?? plan.estimated_cost.max_microcents,
     idempotency_key: randomUUID(),
   });
 

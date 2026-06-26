@@ -22,7 +22,11 @@ async function apiFetch(path, { method = "GET", headers = {}, body } = {}) {
   const url = `${BASE_URL}${path}`;
   let res;
   try {
-    res = await fetch(url, { method, headers, body });
+    res = await fetch(url, {
+      method,
+      headers: { "X-OpenMerch-Key": apiKey, ...headers },
+      body,
+    });
   } catch (err) {
     console.error(`Error: Network request failed for ${path}: ${err.message}`);
     process.exit(1);
@@ -68,10 +72,7 @@ if (!Number.isFinite(rawCost) || rawCost <= 0) {
 const idempotencyKey = randomUUID();
 let job = await apiFetch("/v1/execute", {
   method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "X-OpenMerch-Key": apiKey,
-  },
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     job_type: JOB_TYPE,
     input: { company_domain: domain },
@@ -87,9 +88,7 @@ if (job.status === "executing") {
   let attempts = 0;
   while (job.status === "executing" && attempts < MAX_ATTEMPTS) {
     await new Promise((r) => setTimeout(r, 1000));
-    job = await apiFetch(`/v1/jobs/${job.job_id}`, {
-      headers: { "X-OpenMerch-Key": apiKey },
-    });
+    job = await apiFetch(`/v1/jobs/${job.job_id}`);
     attempts++;
   }
   if (job.status === "executing") {

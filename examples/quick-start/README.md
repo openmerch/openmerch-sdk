@@ -35,16 +35,25 @@ OPENMERCH_BASE_URL=https://api.openmerch.dev OPENMERCH_API_KEY=om_live_... node 
 
 ## Sample Output
 
-<!-- Sample output will vary based on the domain and live data.
-     Run the script with a real API key to see actual results.
+<!-- illustrative — actual output varies by domain and provider -->
 
+```
 === Result ===
 {
-  "company_name": "Acme Corp",
-  "industry": "Software",
-  ...
+  "company_name": "Stripe",
+  "domain": "stripe.com",
+  "industry": "Financial Services",
+  "description": "Stripe builds economic infrastructure for the internet, enabling businesses of all sizes to accept payments and manage revenue online.",
+  "employee_count": 8000,
+  "location": {
+    "city": "San Francisco",
+    "state": "CA",
+    "country": "US"
+  },
+  "website": "https://stripe.com",
+  "linkedin_url": "https://www.linkedin.com/company/stripe"
 }
 
 Cost:   $0.0200 USD
 Job ID: job_01HXK9QVBN3M4RPYG2WJKFZ8
--->
+```

@@ -37,24 +37,38 @@ OPENMERCH_BASE_URL=https://api.openmerch.dev npm start -- acme.com
 
 ## Sample Output
 
-<!-- Sample output will vary based on the domain and live data.
-     Run the script with a real API key to see actual results.
+<!-- illustrative — actual output varies by domain and provider -->
 
-Fetching company data for acme.com...
-Fetching contacts for acme.com (Acme Corp)...
+```
+Fetching company data for stripe.com...
+Fetching contacts for stripe.com (Stripe)...
 
 === Company ===
 {
-  "company_name": "Acme Corp",
-  "industry": "Software",
-  ...
+  "company_name": "Stripe",
+  "domain": "stripe.com",
+  "industry": "Financial Services",
+  "description": "Stripe builds economic infrastructure for the internet, enabling businesses of all sizes to accept payments and manage revenue online.",
+  "employee_count": 8000,
+  "location": { "city": "San Francisco", "state": "CA", "country": "US" },
+  "website": "https://stripe.com"
 }
 Cost: $0.0200 USD  Job: job_01HXK9QVBN3M4RPYG2WJKFZ8
 
 === Contacts ===
 [
-  { "name": "Jane Smith", "title": "VP Engineering", ... },
-  ...
+  {
+    "name": "Sarah Chen",
+    "title": "Head of Enterprise Sales",
+    "email": "s.chen@stripe.com",
+    "linkedin_url": "https://www.linkedin.com/in/sarahchen-stripe"
+  },
+  {
+    "name": "Marcus Webb",
+    "title": "VP Revenue Operations",
+    "email": "m.webb@stripe.com",
+    "linkedin_url": "https://www.linkedin.com/in/marcuswebb"
+  }
 ]
 Cost: $0.0350 USD  Job: job_01HXK9QVCN5M4RPYG2WJKFZ9
--->
+```
